@@ -2,6 +2,7 @@
 const https = require("https");
 const http = require("http");
 const fs = require("fs");
+const path = require("path");
 
 // Import the express module
 const express = require("express");
@@ -42,6 +43,6 @@ app.use((req, res, next) => {
 // This code tells the service to listed to any request coming to the / route.
 // Once the request is received, it will display a message "Hello from express server."
 app.get('/', (req,res)=>{
-  res.send("Hello from express server.")
+  res.sendFile(path.join(__dirname, "../client/public", "index.html"));
 });
 
