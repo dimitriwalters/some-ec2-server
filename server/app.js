@@ -39,10 +39,5 @@ app.use((req, res, next) => {
   next();
 });
 
-// Create an try point route for the Express app
-// This code tells the service to listed to any request coming to the / route.
-// Once the request is received, it will display a message "Hello from express server."
-app.get('/', (req,res)=>{
-  res.sendFile(path.join(__dirname, "../client/public", "index.html"));
-});
+app.use(express.static(path.resolve(__dirname, '../client/build')));
 
