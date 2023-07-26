@@ -10,6 +10,12 @@ const express = require("express");
 // Instantiate an Express application
 const app = express();
 
+const redis = require("redis");
+const client = redis.createClient();
+client.on('error', err => console.log('Redis Client Error', err));
+
+client.connect();
+
 // Create a NodeJS HTTPS listener that points to the Express app
 // Use a callback function to tell when the server is created.
 https
@@ -37,6 +43,12 @@ app.use((req, res, next) => {
   }
 
   next();
+});
+
+app.get('/api/count', (req, res) => {
+  client.incr('count').then(v => {
+    res.send({'count': v});
+  });
 });
 
 app.use(express.static(path.resolve(__dirname, '../client/build')));
